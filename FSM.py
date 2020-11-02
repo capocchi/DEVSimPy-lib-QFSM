@@ -159,15 +159,17 @@ class FSM():
 
                 transitionDict = self.getTransitionDict()
                 currentState = self.getCurrentState()
+                out = []
                 
                 if transitionDict:
-                        self._currentoutput = None
+                        self._currentoutput = None 
                         for d in transitionDict:
                                 if d['start'] == currentState and d['event'] == event:
                                         self.setCurrentState(d['target'])
-                                        self.setCurrentOutput(d['send'])
-                                        break
-                                        
+                                        #self.setCurrentOutput(d['send'])
+                                        out.append(d['send'])
+                                        #break
+                self.setCurrentOutput(out)
                 return  (self.getCurrentState(), self.getCurrentOutput())
                 
 def SCXMLtoFSM(scxml):
@@ -212,26 +214,26 @@ def SCXMLtoFSM(scxml):
 
 if __name__ == '__main__':
 
-        print SCXMLtoFSM("scxml\FSM.xml")
+        print(SCXMLtoFSM("scxml\FSM.xml"))
 
         FSM1 = FSM()
         FSM1.initFromSCXML("scxml\FSM.xml")
-        print "initial state ",FSM1.getCurrentState()
+        print ("initial state ",FSM1.getCurrentState())
 
-        print "send 1 ", FSM1.next('1')
-        print "send 0 ", FSM1.next('0')
-        print "send 0 ", FSM1.next('0')
-        print "send 1 ", FSM1.next('1')
+        print ("send 1 ", FSM1.next('1'))
+        print ("send 0 ", FSM1.next('0'))
+        print ("send 0 ", FSM1.next('0'))
+        print ("send 1 ", FSM1.next('1'))
 
         FSM2 = FSM()
         FSM2.initFromSCXML("scxml\FSM_SC_DC.xml")
-        print "initial state ",FSM2.getCurrentState()
-        print "states ", FSM2.getStates()
-        print "events ", FSM2.getEvents()
+        print ("initial state ",FSM2.getCurrentState())
+        print ("states ", FSM2.getStates())
+        print ("events ", FSM2.getEvents())
 
-        print FSM2.getTransitionDict()
+        print(FSM2.getTransitionDict())
         
-        print "send ON ", FSM2.next('ON')
-        print "send OFF ", FSM2.next('OFF')
-        print "send DC ", FSM2.next('DC')
-        print "send ON ", FSM2.next('ON')
+        print ("send ON ", FSM2.next('ON'))
+        print ("send OFF ", FSM2.next('OFF'))
+        print ("send DC ", FSM2.next('DC'))
+        print ("send ON ", FSM2.next('ON'))
